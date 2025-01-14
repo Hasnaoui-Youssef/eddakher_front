@@ -140,6 +140,7 @@ export class ExpensesComponent implements OnInit {
     delete transferObject['price'];
     console.log(transferObject);
     this.showDialog = false;
+    this.resetForm();
     this.apiService.addItem('expenses', transferObject).subscribe((_) => this.loadExpenses());
   }
   nextPageDialog(){

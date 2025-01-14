@@ -1,17 +1,30 @@
+<header class="bg-white shadow-md">
+  <nav class="container mx-auto flex justify-between items-center py-4 px-6">
+    <div class="flex space-x-8 text-gray-600 font-medium">
+      <a routerLink="/expenses" routerLinkActive="text-blue-600 font-semibold border-b-2 border-blue-600" 
+         ariaCurrentWhenActive="page" 
+         class="hover:text-blue-600 transition duration-300">
+        Dépenses
+      </a>
+      <a routerLink="/revenues" routerLinkActive="text-blue-600 font-semibold border-b-2 border-blue-600" 
+         ariaCurrentWhenActive="page" 
+         class="hover:text-blue-600 transition duration-300">
+        Revenues
+      </a>
+      <a routerLink="/economies" routerLinkActive="text-blue-600 font-semibold border-b-2 border-blue-600" 
+         ariaCurrentWhenActive="page" 
+         class="hover:text-blue-600 transition duration-300">
+        Économies
+      </a>
+      <a routerLink="/monthly" routerLinkActive="text-blue-600 font-semibold border-b-2 border-blue-600" 
+         ariaCurrentWhenActive="page" 
+         class="hover:text-blue-600 transition duration-300">
+        Rapports Mensuels
+      </a>
+    </div>
+  </nav>
+</header>
+
 <main class="main container mx-auto">
-  <div class="flex space-x-4 mb-4">
-    <a routerLink="/expenses" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-blue-500 hover:underline">
-      Depenses
-    </a>
-    <a routerLink="/revenues" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-blue-500 hover:underline">
-      Revenues
-    </a>
-    <a routerLink="/economies" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-blue-500 hover:underline">
-      Economies
-    </a>
-    <a routerLink="/monthly" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-blue-500 hover:underline">
-      Rapports Monsuels
-    </a>
-  </div>
   <router-outlet></router-outlet>
 </main>

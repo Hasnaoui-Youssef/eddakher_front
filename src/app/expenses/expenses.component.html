@@ -72,12 +72,17 @@
               <label class="block text-gray-700">Payment Method</label>
               <select [(ngModel)]="newExpense.paymentMethod" name="paymentMethod"
                       class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                <option value="" disabled>Select payment method</option>
+                <option value="" disabled>Choisir le mode de paiement</option>
                 <option value="cash">Cash</option>
                 <option value="check">Check</option>
                 <option value="virement">Virement</option>
               </select>
             </div>
+            <div class="mb-4">
+              <label class="block text-gray-700">Date</label>
+              <input type="date" [(ngModel)]="newExpense.date" name="expenseDate"
+                class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+          </div>
             <!-- Form action buttons -->
             <div class="flex justify-end">
             <button type="button" (click)="closeDialog()" 

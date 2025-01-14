@@ -1,1 +1,146 @@
-<p>monthly works!</p>
+@if(showDialog){
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+      <div class="bg-white rounded-lg p-6 shadow-lg max-w-md w-full">
+        <form (ngSubmit)="loadData()">
+            <!-- Form Inputs -->
+            <div class="mb-4">
+              <label class="block text-gray-700">Mois</label>
+              <select [(ngModel)]="queryMonth" name="Month"
+                      class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                <option value="" disabled>Choisir Mois</option>
+                @for(month of months; track $index){
+                  <option [value]="$index + 1">{{month}}</option>
+                }
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700">Annee</label>
+              <input type="number" [(ngModel)]="queryYear" name="Year"
+                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+            </div>
+            <!-- Form action buttons -->
+            <div class="flex justify-end">
+              <button type="button" (click)="closeDialog()" 
+                      class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg mr-2">
+                Annuler
+              </button>
+              <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+                Chercher Par Mois
+              </button>
+            </div>
+        </form>
+      </div>
+  </div>
+}
+
+<div class="overflow-x-auto rounded-lg shadow-md">
+  <table class="min-w-full divide-y divide-gray-300">
+    <thead class="bg-gray-200">
+      <tr>
+        @for (key of economiesTitleInfo; track $index) {
+          <th scope="col" class="px-6 py-3 text-center text-sm font-medium text-gray-700 uppercase tracking-wider">
+            {{ key.title }}
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      @for (item of data.economies; track $index) {
+        <tr class="hover:bg-green-200">
+          @for( key of economiesTitleInfo; track $index){
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 text-center">
+              {{ (item[key.field] | json) || '-' }}
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+<div class="overflow-x-auto rounded-lg shadow-md">
+  <table class="min-w-full divide-y divide-gray-300">
+    <thead class="bg-gray-200">
+      <tr>
+        @for (key of revenuesTitleInfo; track $index) {
+          <th scope="col" class="px-6 py-3 text-center text-sm font-medium text-gray-700 uppercase tracking-wider">
+            {{ key.title }}
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      @for (item of data.revenues; track $index) {
+        <tr class="hover:bg-green-200">
+          @for( key of revenuesTitleInfo; track $index){
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 text-center">
+              {{ (item[key.field] | json) || '-' }}
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+<div class="overflow-x-auto rounded-lg shadow-md">
+  <table class="min-w-full divide-y divide-gray-300">
+    <thead class="bg-gray-200">
+      <tr>
+        @for (key of expenseTitleInfo; track $index) {
+          <th scope="col" class="px-6 py-3 text-center text-sm font-medium text-gray-700 uppercase tracking-wider">
+            {{ key.title }}
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      @for (item of data.expenses; track $index) {
+        <tr class="hover:bg-red-200">
+          @for( key of expenseTitleInfo; track $index){
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 text-center">
+              {{ (item[key.field] | json) || '-' }}
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+<div class="overflow-x-auto rounded-lg shadow-md">
+  <table class="min-w-full divide-y divide-gray-300">
+    <thead class="bg-gray-200">
+      <tr>
+        @for (key of reportTitleInfo; track $index) {
+          <th scope="col" class="px-6 py-3 text-center text-sm font-medium text-gray-700 uppercase tracking-wider">
+            {{ key.title }}
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+        <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 text-center hover:bg-green-200">
+              {{ (data["totalGains"] | json) || '-' }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 text-center hover:bg-red-200">
+              {{ (data["totalExpenses"] | json) || '-' }}
+            </td>
+            @if(data.net < 0){
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 text-center hover:bg-red-200">
+                  {{ (data["net"] | json) || '-' }}
+                </td>
+            }
+            @else {
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 text-center hover:bg-green-200">
+                  {{ (data["net"] | json) || '-' }}
+                </td>
+            }
+        </tr>
+    </tbody>
+  </table>
+</div>
+<div class="flex justify-end mb-4 py-5 px-5">
+  <button (click)="openDialog()"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md">
+    Chercher Par Mois
+  </button>
+</div>

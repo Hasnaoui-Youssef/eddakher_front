@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { CommonModule } from '@angular/common';
 
@@ -10,6 +10,9 @@ import { CommonModule } from '@angular/common';
 })
 export class ExpensesComponent implements OnInit {
   expenses : any[] = [];
+  showContextMenu : boolean = false;
+  contextMenuPosition = {x : 0, y : 0};
+  selectedRow : number | null = null;
   tableInfo : { title : string, field : string }[] = [
       { title : "Nom", field : "clientName"},
       { title : "Description", field : "description"},
@@ -43,6 +46,7 @@ export class ExpensesComponent implements OnInit {
   loadExpenses(){
     const items = this.apiService.getItems('expenses').subscribe((data : any) => {
       this.expenses = data.map((elem : any) => this.flattenObject(elem));
+      console.log(this.expenses)
     })
   }
 
@@ -51,9 +55,23 @@ export class ExpensesComponent implements OnInit {
       this.loadExpenses();
     })
   }
-  deleteExpense(id: string) {
-    this.apiService.deleteItem('expenses', id).subscribe(() => {
-      this.loadExpenses();
-    });
+  deleteExpense(index : number | null) {
+    if(index !== null){
+      const id = this.expenses[index]._id;
+      this.apiService.deleteItem('expenses', id).subscribe(() => {
+        this.loadExpenses();
+      });
+    }
+    this.showContextMenu = false;
+  }
+  onRowRightClick(event : MouseEvent, index : number){
+    event.preventDefault();
+    this.selectedRow = index;
+    this.contextMenuPosition = { x : event.pageX, y : event.pageY };
+    this.showContextMenu = true; 
+  }
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event : MouseEvent){
+    this.showContextMenu = false;
   }
 }

@@ -82,11 +82,6 @@ export class ExpensesComponent implements OnInit {
     })
   }
 
-  addExpense(expense : any){
-    this.apiService.addItem('expenses', expense).subscribe((data : any) => {
-      this.loadExpenses();
-    })
-  }
   deleteExpense(index : number | null) {
     if(index !== null){
       const id = this.expenses[index]._id;

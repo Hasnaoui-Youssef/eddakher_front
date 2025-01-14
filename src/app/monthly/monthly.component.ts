@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './monthly.component.css'
 })
 export class MonthlyComponent {
-
+  data : any;
+  expenseTitleInfo : {title : string; field : string}[] = []
 }

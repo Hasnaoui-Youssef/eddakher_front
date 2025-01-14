@@ -10,9 +10,31 @@ import { CommonModule } from '@angular/common';
 })
 export class ExpensesComponent implements OnInit {
   expenses : any[] = [];
-  uniqueKeys : string[] = ["clientName", "description", "paymentMethod", "paymentDetails", "date"];
+  tableInfo : { title : string, field : string }[] = [
+      { title : "Nom", field : "clientName"},
+      { title : "Description", field : "description"},
+      { title : "Mode de paiement", field : "paymentMethod"},
+      { title : "Prix", field : "price"},
+      { title : "Numero cheque", field : "checkNumber"},
+      { title : "RIB", field : "RIB"},
+      { title : "Frais bancaire", field : "bankFee"}
+  ]
 
   constructor(private apiService : ApiService){}
+  flattenObject(obj : any) : any {
+    let res : any = {};
+    for (const key in obj){
+      if((typeof obj[key]) === 'object' && !Array.isArray(obj[key])){
+        const temp = this.flattenObject(obj[key]);
+        for(const nestedKey in temp){
+          res[nestedKey] = temp[nestedKey]
+        }
+      }else{
+        res[key] = obj[key];
+      }
+    }
+    return res;
+  }
 
   ngOnInit(): void {
     this.loadExpenses();
@@ -20,7 +42,7 @@ export class ExpensesComponent implements OnInit {
 
   loadExpenses(){
     const items = this.apiService.getItems('expenses').subscribe((data : any) => {
-      this.expenses = data;
+      this.expenses = data.map((elem : any) => this.flattenObject(elem));
     })
   }
 
